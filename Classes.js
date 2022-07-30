@@ -1,8 +1,10 @@
 class Chunk{
     //coordinates are in screenspace
-    constructor(x=0, y=0){
+    constructor(x=0, y=0, status='unvisited', distance=Infinity){
         this.x = x
         this.y = y
+        this.s = status
+        this.d = distance
     }
 
     //draw this chunk to the canvas
@@ -21,29 +23,20 @@ class Chunk{
     }
 }
 
-class Path{
-    constructor(first){
-        this.chunks = [first]
-        this.cost = 0
-    }
-
-    addChunk(chunk, cost=1){
-        this.chunks.push(chunk)
-        this.cost += cost
-    }
-}
-
 class Grid{
     constructor(width, height, chunkSize){
         this.w = width
         this.h = height
         this.chunkSize = chunkSize
         
-        this.start = new Chunk()
-        this.end = new Chunk(width - 1, height - 1)
-        
-        this.walls = []
-        this.explored = []
+        this.chunks = []
+        for(let y = 0; y < this.h; y++){
+            let row = []
+            for(let x = 0; x < this.w; x++){
+                row.push(new Chunk(x, y))
+            }
+            this.chunks.push(row)
+        }
 
         this.colors = {
             grid: 'grey',
