@@ -35,6 +35,7 @@ class Grid{
     constructor(width, height, chunkSize){
         this.w = width
         this.h = height
+        this.chunkSize = chunkSize
         
         this.start = new Chunk()
         this.end = new Chunk(width - 1, height - 1)
@@ -46,6 +47,26 @@ class Grid{
             grid: 'grey',
             bg: 'white',
             wall: 'black',
+        }
+    }
+
+    drawGrid(ctx){
+        ctx.strokeStyle = this.colors.grid
+        
+        //vertical lines
+        for(let i = 0; i <= this.w; i++){
+            ctx.beginPath()
+            ctx.moveTo(i * this.chunkSize, 0)
+            ctx.lineTo(i * this.chunkSize, this.h * this.chunkSize)
+            ctx.stroke()
+        }
+
+        //horizontal lines
+        for(let i = 0; i <= this.h; i++){
+            ctx.beginPath()
+            ctx.moveTo(0, i * this.chunkSize)
+            ctx.lineTo(this.w * this.chunkSize, i * this.chunkSize)
+            ctx.stroke()
         }
     }
 }
