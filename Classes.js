@@ -70,6 +70,10 @@ class Grid{
         
         //end
         this.end.draw(ctx, this.chunkSize, 'red', this.colors.border)
+
+        //walls
+        for(const wall of this.walls)
+            wall.draw(ctx, this.chunkSize, this.colors.wall, this.colors.wall)
     }
 
     drawGrid(ctx){
