@@ -49,13 +49,18 @@ class Grid{
     }
 
     //get neighbours of a chunk
-    getNeighbours(x, y){
+    getNeighbours(x, y, diagonals=true){
         let ret = []
         for(let i = x - 1; i <= x + 1; i++){
             for(let j = y - 1; j <= y + 1; j++){
                 //ignore this element
                 if(i == x && j == y)
                     continue
+
+                //no diagonals
+                if(i != x && j != y && !diagonals)
+                    continue
+                
                 //if x and y are in bounds
                 if(0 <= i && i < this.w && 0 <= j && j < this.h){
                     //if the chunk has never been visited and it is not a wall
