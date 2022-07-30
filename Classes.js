@@ -58,22 +58,18 @@ class Grid{
     drawChunks(ctx){
         for(let x = 0; x < this.w; x++){
             for(let y = 0; y < this.h; y++){
-                    this.drawChunk(ctx, x, y, this.chunks[x][y].status)
+                ctx.beginPath()
+                switch(this.chunks[x][y].status){
+                    case 'wall': ctx.fillStyle = this.colors.wall; break
+                    case 'start': ctx.fillStyle = this.colors.start; break
+                    case 'end': ctx.fillStyle = this.colors.end; break
+                    default: ctx.fillStyle = this.colors.bg
+                }
+        
+                ctx.arc((x + 0.5) * this.chunkSize, (y + 0.5) * this.chunkSize, this.chunkSize / 2 - 2.5, 0, 2*Math.PI)
+                ctx.fill()
             }
         }
-    }
-
-    drawChunk(ctx, x, y, status){
-        ctx.beginPath()
-        switch(status){
-            case 'wall': ctx.fillStyle = this.colors.wall; break
-            case 'start': ctx.fillStyle = this.colors.start; break
-            case 'end': ctx.fillStyle = this.colors.end; break
-            default: ctx.fillStyle = this.colors.bg
-        }
-
-        ctx.arc((x + 0.5) * this.chunkSize, (y + 0.5) * this.chunkSize, this.chunkSize / 2 - 2.5, 0, 2*Math.PI)
-        ctx.fill()
     }
     
     drawGrid(ctx){
