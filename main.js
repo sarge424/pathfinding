@@ -5,17 +5,17 @@ let ctx
 let map
 
 const CHUNKSIZE = 25
+const ROWS = 20
+const COLS = 50
     
 function start(){
-    const dimensions = get_wh()
-
     canvas = document.getElementById('canvas')
-    canvas.width = dimensions[0] * CHUNKSIZE
-    canvas.height = dimensions[1] * CHUNKSIZE
+    canvas.width = COLS * CHUNKSIZE
+    canvas.height = ROWS * CHUNKSIZE
     ctx = canvas.getContext('2d')
 
     //grid takes width, height and chunkSize
-    map = new Grid(dimensions[0], dimensions[1], CHUNKSIZE)
+    map = new Grid(COLS, ROWS, CHUNKSIZE)
     
     map.draw(ctx)
     map.drawGrid(ctx)
@@ -36,16 +36,4 @@ function start(){
         map.drawGrid(ctx)
         map.draw(ctx)
     })
-}
-
-function get_wh(){
-    //gets 100% width and 80% height to get grid size
-    let container = document.getElementById('container')
-    let w = container.clientWidth
-    let h = container.clientHeight * 0.8
-
-    w = w - w % CHUNKSIZE
-    h = h - h % CHUNKSIZE
-
-    return[w/CHUNKSIZE, h/CHUNKSIZE]
 }
