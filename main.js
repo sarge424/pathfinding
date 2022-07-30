@@ -19,7 +19,7 @@ function start(){
     
     map.draw(ctx, true)
 
-    canvas.addEventListener('mouseup', (e) => {
+    canvas.addEventListener('mouseup', e => {
         const target = e.target;
         const rect = target. getBoundingClientRect();
         let mx = e.clientX - rect.left;
@@ -34,5 +34,13 @@ function start(){
         map.toggleWall(mx, my)
     
         map.draw(ctx, true)
+    })
+
+    window.addEventListener('keydown', e => {
+        if(e.key === 'a'){
+            let djikstra = new Solver()
+            djikstra.step(map)
+            map.draw(ctx, true)
+        }
     })
 }

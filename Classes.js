@@ -24,7 +24,7 @@ class Grid{
         }
 
         //set start and end
-        this.chunks[1][1] = new Chunk('start', 0, true)
+        this.chunks[1][1] = new Chunk('start', 0, false)
         this.chunks[10][10].status = 'end'
 
         //color settings
@@ -53,8 +53,11 @@ class Grid{
         let ret = []
         for(let i = x - 1; i <= x + 1; i++){
             for(let j = y - 1; j <= y + 1; j++){
-                if(0 <= i && i < this.w && 0 <= j && j < this.h)
-                    ret.push(this.chunks[i][j])
+                //if x and y are in bounds
+                if(0 <= i && i < this.w && 0 <= j && j < this.h){
+                    if(this.chunks[i][j].status != 'wall' && this.chunks[i][j].visited === false)
+                        ret.push(this.chunks[i][j])
+                }
             }
         }
         return ret
