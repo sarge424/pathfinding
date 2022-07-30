@@ -16,6 +16,18 @@ function start(){
     map = new Grid(dimensions[0], dimensions[1], 25)
     
     map.draw(ctx)
+    map.drawGrid(ctx)
+
+    canvas.addEventListener('mouseup', (e) => {
+        let mx = e.offsetX
+        let my = e.offsetY
+
+        mx -= mx % 25
+        my -= my % 25
+
+        mx /= 25
+        my /= 25
+    })
 }
 
 function get_wh(){
