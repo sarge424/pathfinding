@@ -30,3 +30,22 @@ class Path{
         this.cost += cost
     }
 }
+
+class Grid{
+    constructor(width, height, chunkSize){
+        this.w = width
+        this.h = height
+        
+        this.start = new Chunk()
+        this.end = new Chunk(width - 1, height - 1)
+        
+        this.walls = []
+        this.explored = []
+
+        this.colors = {
+            grid: 'grey',
+            bg: 'white',
+            wall: 'black',
+        }
+    }
+}
