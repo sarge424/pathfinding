@@ -20,18 +20,20 @@ function start(){
     map.draw(ctx)
     map.drawGrid(ctx)
 
-    document.getElementById('container').addEventListener('mouseup', (e) => {
-        let mx = e.offsetX
-        let my = e.offsetY
-
-        //mx -= mx % CHUNKSIZE
-        ///my -= my % CHUNKSIZE
+    canvas.addEventListener('mouseup', (e) => {
+        const target = e.target;
+        const rect = target. getBoundingClientRect();
+        let mx = e.clientX - rect.left;
+        let my = e.clientY - rect.top;
+        
+        mx -= mx % CHUNKSIZE
+        my -= my % CHUNKSIZE
 
         mx /= CHUNKSIZE
         my /= CHUNKSIZE
 
         console.log(e.clientX, e.clientY, map.w * CHUNKSIZE, map.h * CHUNKSIZE)
-        //map.toggleWall(mx, my)
+        map.toggleWall(mx, my)
         
         map.drawGrid(ctx)
         map.draw(ctx)
