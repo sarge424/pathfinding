@@ -18,3 +18,15 @@ class Chunk{
         ctx.stroke()
     }
 }
+
+class Path{
+    constructor(first){
+        this.chunks = [first]
+        this.cost = 0
+    }
+
+    addChunk(chunk, cost=1){
+        this.chunks.push(chunk)
+        this.cost += cost
+    }
+}
