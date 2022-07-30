@@ -54,19 +54,29 @@ class Grid{
         ctx.strokeStyle = this.colors.grid
         
         //vertical lines
-        for(let i = 0; i <= this.w; i++){
+        for(let i = 0; i < this.w; i++){
             ctx.beginPath()
             ctx.moveTo(i * this.chunkSize + 0.5, 0)
             ctx.lineTo(i * this.chunkSize + 0.5, this.h * this.chunkSize)
             ctx.stroke()
         }
+        //right border
+        ctx.beginPath()
+        ctx.moveTo(this.w * this.chunkSize - 0.5, 0)
+        ctx.lineTo(this.w * this.chunkSize - 0.5, this.h * this.chunkSize)
+        ctx.stroke()
 
         //horizontal lines
-        for(let i = 0; i <= this.h; i++){
+        for(let i = 0; i < this.h; i++){
             ctx.beginPath()
             ctx.moveTo(0, i * this.chunkSize + 0.5)
             ctx.lineTo(this.w * this.chunkSize, i * this.chunkSize + 0.5)
             ctx.stroke()
         }
+        //bottom border
+        ctx.beginPath()
+        ctx.moveTo(0, this.h * this.chunkSize - 0.5)
+        ctx.lineTo(this.w * this.chunkSize, this.h * this.chunkSize - 0.5)
+        ctx.stroke()
     }
 }
