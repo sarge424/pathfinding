@@ -1,25 +1,8 @@
 class Chunk{
     //coordinates are in screenspace
-    constructor(x=0, y=0, status='unvisited', distance=Infinity){
-        this.x = x
-        this.y = y
+    constructor(status='unvisited', distance=Infinity){
         this.s = status
         this.d = distance
-    }
-
-    //draw this chunk to the canvas
-    draw(ctx, chunkSize, color, border){
-        //solid fill
-        ctx.beginPath()
-        ctx.fillStyle = color
-        ctx.arc((this.x + 0.5) * chunkSize, (this.y + 0.5) * chunkSize, (chunkSize-2) / 2, 0, 2*Math.PI)
-        ctx.fill()
-
-        //outline
-        ctx.beginPath()
-        ctx.strokeStyle = border
-        ctx.arc((this.x + 0.5) * chunkSize, (this.y + 0.5) * chunkSize, (chunkSize-2) / 2, 0, 2*Math.PI)
-        ctx.stroke()
     }
 }
 
@@ -33,7 +16,7 @@ class Grid{
         for(let y = 0; y < this.h; y++){
             let row = []
             for(let x = 0; x < this.w; x++){
-                row.push(new Chunk(x, y))
+                row.push(new Chunk())
             }
             this.chunks.push(row)
         }
@@ -47,14 +30,10 @@ class Grid{
     }
 
     toggleWall(coordX, coordY){
-        if(this.walls.filter(w => w.x == coordX && w.y == coordY).length > 0){
-            //the clicked chunk is already a wall
-            this.walls = this.walls.filter(w => w.x != coordX || w.y != coordY)
-        }else{
-            //add the clicked chunk as a wall
-            console.log('is not a wall!');
-            let clickedChunk = new Chunk(coordX, coordY)
-            this.walls.push(clickedChunk)
+        if(this.chunks[coordY][coordX].status === 'unvisited'){
+            this.chunks[coordY][coordX].status = 'wall'
+        }else if(this.chunks[coordY][coordX].status === 'wall'){
+            this.chunks[coordY][coordX].status = 'unvisited'
         }
     }
 
