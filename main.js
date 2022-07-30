@@ -14,7 +14,8 @@ function start(){
 
     //grid takes width, height and chunkSize
     map = new Grid(dimensions[0], dimensions[1], 25)
-    map.drawGrid(ctx)
+    
+    map.draw(ctx)
 }
 
 function get_wh(){

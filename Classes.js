@@ -8,13 +8,15 @@ class Chunk{
     //draw this chunk to the canvas
     draw(ctx, chunkSize, color, border){
         //solid fill
+        ctx.beginPath()
         ctx.fillStyle = color
-        ctx.arc(x * chunkSize, y * chunkSize, (chunkSize-2) / 2, 0, 2*Math.PI)
+        ctx.arc((this.x + 0.5) * chunkSize, (this.y + 0.5) * chunkSize, (chunkSize-2) / 2, 0, 2*Math.PI)
         ctx.fill()
 
         //outline
+        ctx.beginPath()
         ctx.strokeStyle = border
-        ctx.arc(x * chunkSize, y * chunkSize, (chunkSize-2) / 2, 0, 2*Math.PI)
+        ctx.arc((this.x + 0.5) * chunkSize, (this.y + 0.5) * chunkSize, (chunkSize-2) / 2, 0, 2*Math.PI)
         ctx.stroke()
     }
 }
@@ -45,9 +47,18 @@ class Grid{
 
         this.colors = {
             grid: 'grey',
+            border: 'lightgrey',
             bg: 'white',
             wall: 'black',
         }
+    }
+
+    draw(ctx){
+        //start
+        this.start.draw(ctx, this.chunkSize, 'green', this.colors.border)
+        
+        //end
+        this.end.draw(ctx, this.chunkSize, 'red', this.colors.border)
     }
 
     drawGrid(ctx){
