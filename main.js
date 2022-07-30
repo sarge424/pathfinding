@@ -31,7 +31,6 @@ function start(){
         mx /= CHUNKSIZE
         my /= CHUNKSIZE
 
-        console.log(e.clientX, e.clientY, map.w * CHUNKSIZE, map.h * CHUNKSIZE)
         map.toggleWall(mx, my)
     
         map.draw(ctx)

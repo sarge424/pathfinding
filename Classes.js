@@ -1,7 +1,7 @@
 class Chunk{
     //coordinates are in screenspace
-    constructor(status='unvisited', distance=Infinity){
-        this.s = status
+    constructor(s='unvisited', distance=Infinity){
+        this.status = s
         this.d = distance
     }
 }
@@ -12,28 +12,36 @@ class Grid{
         this.h = height
         this.chunkSize = chunkSize
         
+        //chunks are stored in columns so we can do chunks[x][y]
         this.chunks = []
-        for(let y = 0; y < this.h; y++){
-            let row = []
-            for(let x = 0; x < this.w; x++){
-                row.push(new Chunk())
+        for(let x = 0; x < this.w; x++){
+            let col = []
+            for(let y = 0; y < this.h; y++){
+                col.push(new Chunk())
             }
-            this.chunks.push(row)
+            this.chunks.push(col)
         }
+
+        //set start and end
+        this.chunks[1][1].status = 'start'
+        this.chunks[10][10].status = 'end'
 
         this.colors = {
             grid: 'grey',
             border: 'lightgrey',
             bg: 'white',
             wall: 'black',
+            start: 'green',
+            end: 'red'
         }
     }
 
     toggleWall(coordX, coordY){
-        if(this.chunks[coordY][coordX].status === 'unvisited'){
-            this.chunks[coordY][coordX].status = 'wall'
-        }else if(this.chunks[coordY][coordX].status === 'wall'){
-            this.chunks[coordY][coordX].status = 'unvisited'
+        console.log(this.chunks[coordX][coordY].status);
+        if(this.chunks[coordX][coordY].status === 'unvisited'){
+            this.chunks[coordX][coordY].status = 'wall'
+        }else if(this.chunks[coordX][coordY].status === 'wall'){
+            this.chunks[coordX][coordY].status = 'unvisited'
         }
     }
 
@@ -48,15 +56,24 @@ class Grid{
     }
 
     drawChunks(ctx){
-        //start
-        this.start.draw(ctx, this.chunkSize, 'green', this.colors.border)
-        
-        //end
-        this.end.draw(ctx, this.chunkSize, 'red', this.colors.border)
-    
-        //walls
-        for(const wall of this.walls)
-        wall.draw(ctx, this.chunkSize, this.colors.wall, this.colors.wall)
+        for(let x = 0; x < this.w; x++){
+            for(let y = 0; y < this.h; y++){
+                    this.drawChunk(ctx, x, y, this.chunks[x][y].status)
+            }
+        }
+    }
+
+    drawChunk(ctx, x, y, status){
+        ctx.beginPath()
+        switch(status){
+            case 'wall': ctx.fillStyle = this.colors.wall; break
+            case 'start': ctx.fillStyle = this.colors.start; break
+            case 'end': ctx.fillStyle = this.colors.end; break
+            default: ctx.fillStyle = this.colors.bg
+        }
+
+        ctx.arc((x + 0.5) * this.chunkSize, (y + 0.5) * this.chunkSize, this.chunkSize / 2 - 2.5, 0, 2*Math.PI)
+        ctx.fill()
     }
     
     drawGrid(ctx){
