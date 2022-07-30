@@ -1,8 +1,9 @@
 class Chunk{
     //coordinates are in screenspace
-    constructor(s='unvisited', distance=Infinity){
+    constructor(s='unvisited', distance=Infinity, visited=false){
         this.status = s
         this.d = distance
+        this.v = false
     }
 }
 
@@ -23,7 +24,7 @@ class Grid{
         }
 
         //set start and end
-        this.chunks[1][1].status = 'start'
+        this.chunks[1][1] = new Chunk('start', 0, true)
         this.chunks[10][10].status = 'end'
 
         this.colors = {
@@ -45,10 +46,13 @@ class Grid{
         }
     }
 
-    draw(ctx){
+    draw(ctx, debug=false){
         this.clear(ctx)
         this.drawGrid(ctx)
         this.drawChunks(ctx)
+
+        if(debug)
+            this.debug(ctx)
     }
 
     clear(ctx){
@@ -100,5 +104,18 @@ class Grid{
         ctx.moveTo(0, this.h * this.chunkSize - 0.5)
         ctx.lineTo(this.w * this.chunkSize, this.h * this.chunkSize - 0.5)
         ctx.stroke()
+    }
+
+    debug(ctx){
+        for(let x = 0; x < this.w; x++){
+            for(let y = 0; y < this.h; y++){
+                let d = this.chunks[x][y].d === Infinity ? -1 : this.chunks[x][y].d
+                ctx.beginPath()
+                ctx.fillStyle = 'magenta'
+                ctx.font = "20px Arial"
+                ctx.fillText(d, x * this.chunkSize, (y + 1) * this.chunkSize)
+                ctx.fill()
+            }
+        }
     }
 }

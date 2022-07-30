@@ -17,7 +17,7 @@ function start(){
     //grid takes width, height and chunkSize
     map = new Grid(COLS, ROWS, CHUNKSIZE)
     
-    map.draw(ctx)
+    map.draw(ctx, true)
 
     canvas.addEventListener('mouseup', (e) => {
         const target = e.target;
@@ -33,6 +33,6 @@ function start(){
 
         map.toggleWall(mx, my)
     
-        map.draw(ctx)
+        map.draw(ctx, true)
     })
 }
