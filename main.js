@@ -3,6 +3,7 @@ let canvas
 let ctx
 
 let map
+let djikstra
 
 const CHUNKSIZE = 25
 const ROWS = 20
@@ -13,6 +14,8 @@ function start(){
     canvas.width = COLS * CHUNKSIZE
     canvas.height = ROWS * CHUNKSIZE
     ctx = canvas.getContext('2d')
+
+    djikstra = new Solver()
 
     //grid takes width, height and chunkSize
     map = new Grid(COLS, ROWS, CHUNKSIZE)
@@ -38,7 +41,6 @@ function start(){
 
     window.addEventListener('keydown', e => {
         if(e.key === 'a'){
-            let djikstra = new Solver()
             djikstra.step(map)
             map.draw(ctx, true)
         }

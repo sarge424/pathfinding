@@ -1,6 +1,6 @@
 class Chunk{
     //coordinates are in screenspace
-    constructor(s='unvisited', distance=Infinity, visited=false){
+    constructor(s='default', distance=Infinity, visited=false){
         this.status = s
         this.d = distance
         this.v = false
@@ -41,10 +41,10 @@ class Grid{
     //toggle a chunk to be wall or not
     toggleWall(coordX, coordY){
         console.log(this.chunks[coordX][coordY].status);
-        if(this.chunks[coordX][coordY].status === 'unvisited'){
+        if(this.chunks[coordX][coordY].status === 'default'){
             this.chunks[coordX][coordY].status = 'wall'
         }else if(this.chunks[coordX][coordY].status === 'wall'){
-            this.chunks[coordX][coordY].status = 'unvisited'
+            this.chunks[coordX][coordY].status = 'default'
         }
     }
 
@@ -53,10 +53,16 @@ class Grid{
         let ret = []
         for(let i = x - 1; i <= x + 1; i++){
             for(let j = y - 1; j <= y + 1; j++){
+                //ignore this element
+                if(i == x && j == y)
+                    continue
                 //if x and y are in bounds
                 if(0 <= i && i < this.w && 0 <= j && j < this.h){
-                    if(this.chunks[i][j].status != 'wall' && this.chunks[i][j].visited === false)
+                    //if the chunk has never been visited and it is not a wall
+                    if(this.chunks[i][j].status != 'wall' && !this.chunks[i][j].v){
                         ret.push(this.chunks[i][j])
+                        console.log(i, j, this.chunks[i][j].status, this.chunks[i][j].d, this.chunks[i][j].v);
+                    }
                 }
             }
         }
@@ -129,7 +135,7 @@ class Grid{
             for(let y = 0; y < this.h; y++){
                 let d = this.chunks[x][y].d === Infinity ? -1 : this.chunks[x][y].d
                 ctx.beginPath()
-                ctx.fillStyle = 'magenta'
+                ctx.fillStyle = this.chunks[x][y].v ? 'orange' : (this.chunks[x][y].d === Infinity ? 'magenta' : 'powderblue')
                 ctx.font = "20px Arial"
                 ctx.fillText(d, x * this.chunkSize, (y + 1) * this.chunkSize)
                 ctx.fill()
