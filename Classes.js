@@ -54,11 +54,12 @@ class Grid{
     }
 
     toggleWall(coordX, coordY){
-        if(this.walls.includes(w => w.x === coordX && wall.y === coordY)){
+        if(this.walls.filter(w => w.x == coordX && w.y == coordY).length > 0){
             //the clicked chunk is already a wall
-            this.walls = this.walls.filter(w => w.x != coordX || wall.y != coordY)
+            this.walls = this.walls.filter(w => w.x != coordX || w.y != coordY)
         }else{
             //add the clicked chunk as a wall
+            console.log('is not a wall!');
             let clickedChunk = new Chunk(coordX, coordY)
             this.walls.push(clickedChunk)
         }
@@ -70,13 +71,14 @@ class Grid{
         
         //end
         this.end.draw(ctx, this.chunkSize, 'red', this.colors.border)
-
+    
         //walls
         for(const wall of this.walls)
-            wall.draw(ctx, this.chunkSize, this.colors.wall, this.colors.wall)
+        wall.draw(ctx, this.chunkSize, this.colors.wall, this.colors.wall)
     }
-
+    
     drawGrid(ctx){
+        ctx.clearRect(0, 0, this.w * this.chunkSize, this.h * this.chunkSize)
         ctx.strokeStyle = this.colors.grid
         
         //vertical lines
