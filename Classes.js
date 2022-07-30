@@ -27,6 +27,7 @@ class Grid{
         this.chunks[1][1] = new Chunk('start', 0, true)
         this.chunks[10][10].status = 'end'
 
+        //color settings
         this.colors = {
             grid: 'grey',
             border: 'lightgrey',
@@ -37,6 +38,7 @@ class Grid{
         }
     }
 
+    //toggle a chunk to be wall or not
     toggleWall(coordX, coordY){
         console.log(this.chunks[coordX][coordY].status);
         if(this.chunks[coordX][coordY].status === 'unvisited'){
@@ -46,6 +48,19 @@ class Grid{
         }
     }
 
+    //get neighbours of a chunk
+    getNeighbours(x, y){
+        let ret = []
+        for(let i = x - 1; i <= x + 1; i++){
+            for(let j = y - 1; j <= y + 1; j++){
+                if(0 <= i && i < this.w && 0 <= j && j < this.h)
+                    ret.push(this.chunks[i][j])
+            }
+        }
+        return ret
+    }
+
+    //draw everything
     draw(ctx, debug=false){
         this.clear(ctx)
         this.drawGrid(ctx)
