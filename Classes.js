@@ -56,16 +56,16 @@ class Grid{
         //vertical lines
         for(let i = 0; i <= this.w; i++){
             ctx.beginPath()
-            ctx.moveTo(i * this.chunkSize, 0)
-            ctx.lineTo(i * this.chunkSize, this.h * this.chunkSize)
+            ctx.moveTo(i * this.chunkSize + 0.5, 0)
+            ctx.lineTo(i * this.chunkSize + 0.5, this.h * this.chunkSize)
             ctx.stroke()
         }
 
         //horizontal lines
         for(let i = 0; i <= this.h; i++){
             ctx.beginPath()
-            ctx.moveTo(0, i * this.chunkSize)
-            ctx.lineTo(this.w * this.chunkSize, i * this.chunkSize)
+            ctx.moveTo(0, i * this.chunkSize + 0.5)
+            ctx.lineTo(this.w * this.chunkSize, i * this.chunkSize + 0.5)
             ctx.stroke()
         }
     }
