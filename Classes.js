@@ -53,6 +53,17 @@ class Grid{
         }
     }
 
+    toggleWall(coordX, coordY){
+        if(this.walls.includes(w => w.x === coordX && wall.y === coordY)){
+            //the clicked chunk is already a wall
+            this.walls = this.walls.filter(w => w.x != coordX || wall.y != coordY)
+        }else{
+            //add the clicked chunk as a wall
+            let clickedChunk = new Chunk(coordX, coordY)
+            this.walls.push(clickedChunk)
+        }
+    }
+
     draw(ctx){
         //start
         this.start.draw(ctx, this.chunkSize, 'green', this.colors.border)
