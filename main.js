@@ -18,7 +18,6 @@ function start(){
     map = new Grid(COLS, ROWS, CHUNKSIZE)
     
     map.draw(ctx)
-    map.drawGrid(ctx)
 
     canvas.addEventListener('mouseup', (e) => {
         const target = e.target;
@@ -34,8 +33,7 @@ function start(){
 
         console.log(e.clientX, e.clientY, map.w * CHUNKSIZE, map.h * CHUNKSIZE)
         map.toggleWall(mx, my)
-        
-        map.drawGrid(ctx)
+    
         map.draw(ctx)
     })
 }

@@ -66,6 +66,16 @@ class Grid{
     }
 
     draw(ctx){
+        this.clear(ctx)
+        this.drawGrid(ctx)
+        this.drawChunks(ctx)
+    }
+
+    clear(ctx){
+        ctx.clearRect(0, 0, this.w * this.chunkSize, this.h * this.chunkSize)
+    }
+
+    drawChunks(ctx){
         //start
         this.start.draw(ctx, this.chunkSize, 'green', this.colors.border)
         
@@ -78,7 +88,6 @@ class Grid{
     }
     
     drawGrid(ctx){
-        ctx.clearRect(0, 0, this.w * this.chunkSize, this.h * this.chunkSize)
         ctx.strokeStyle = this.colors.grid
         
         //vertical lines
