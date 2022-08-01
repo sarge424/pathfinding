@@ -15,12 +15,15 @@ class Solver{
         //get all their neighbors, and set their distance to be current + 1 if its less
         for(let x = 0; x < g.w; x++){
             for(let y = 0; y < g.h; y++){
+                //set current chunk
+                let currChunk = g.chunks[x][y]
+
                 //if a chunks distance is known but it was not visited
-                if(g.chunks[x][y].status != 'wall' && g.chunks[x][y].status != 'found' && g.chunks[x][y].d != Infinity && !g.chunks[x][y].v){
+                if(currChunk.status != 'wall' && currChunk.status != 'found' && currChunk.d != Infinity && !currChunk.v){
                     //we did find chunks (the end may be reachabe)
                     chunksFound = true
                     
-                    console.log('getting neighbours of', x, y, g.chunks[x][y].status, g.chunks[x][y].d, g.chunks[x][y].v)
+                    console.log('getting neighbours of', x, y, currChunk.status, currChunk.d, currChunk.v)
                     //get all the neighbors
                     let neighbors = g.getNeighbours(x, y)
                     //set neighbor distance
@@ -32,11 +35,11 @@ class Solver{
                             else
                                 neighbor.status = 'found'
                         }
-                        neighbor.d = Math.min(g.chunks[x][y].d + 1, neighbor.d)
+                        neighbor.d = Math.min(currChunk.d + 1, neighbor.d)
                     }
                     //set current chunk as visited 
-                    g.chunks[x][y].v = true
-                    console.log('completed', x, y, g.chunks[x][y].status, g.chunks[x][y].d, g.chunks[x][y].v)
+                    currChunk.v = true
+                    console.log('completed', x, y, currChunk.status, currChunk.d, currChunk.v)
                 }
             }
         }
